@@ -5,26 +5,36 @@ VERSION=`git describe --tags`
 TIME=`date +%FT%T%z`
 MODE=$(mode)
 ifeq ($(MODE),)
-	MODE=`debug`
+	MODE=debug
 endif
 # Setup the -Idflags options for go build here,interpolate the variable values
 LDFLAGS=-ldflags "-X main.BuildVersion=${VERSION} -X main.BuildTime=${TIME} -X main.BuildMode=${MODE}"
 # Builds the project
+
+.PHONY: build
 build:
+	@echo "build..."
 	go build ${LDFLAGS} -o ${BINARY}
 
+.PHONY: clean
 clean:
+	@echo "clean..."
 	rm -rf ${BINARY}
+	rm -rf debug
 	rm -rf dist
 
+.PHONY: deps
 deps:
+	@echo "deps..."
 	go get -u -v github.com/gin-gonic/gin
 	go get -u -v github.com/go-ini/ini
+	go get -u -v github.com/go-sql-driver/mysql
+	go get -u -v github.com/go-xorm/xorm
 
-dist:
+.PHONY: dist
+dist: clean build
+	@echo "dist..."
 	mkdir dist
 	cp ${BINARY} dist/
 	mkdir dist/configs
-	cp configs/config_${MODE}_.ini dist/configs/
-
-.PHONY:  build clean dist
+	cp configs/config_"${MODE}".ini dist/configs/
