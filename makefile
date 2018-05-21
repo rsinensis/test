@@ -38,3 +38,11 @@ dist: clean build
 	cp ${BINARY} dist/
 	mkdir dist/configs
 	cp configs/config_"${MODE}".ini dist/configs/
+
+.PHONY: fmt
+fmt:
+	go fmt ./...
+
+.PHONY: vet
+vet:
+	go vet ./.

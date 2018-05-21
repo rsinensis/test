@@ -9,7 +9,6 @@ import (
 
 // Config is app config handle
 var Config *ini.File
-
 var Mode string
 
 func SettingInit(mode string) {

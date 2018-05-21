@@ -42,13 +42,13 @@ func main() {
 
 	routers.RouterInit(engine)
 
-	addr := setting.Config.Section("server").Key("addr").MustInt(80)
+	port := setting.Config.Section("server").Key("port").MustInt(80)
 	readTimeout := setting.Config.Section("server").Key("ReadTimeout").MustInt(10)
 	writeTimeout := setting.Config.Section("server").Key("WriteTimeout").MustInt(10)
 	maxHeaderBytes := setting.Config.Section("server").Key("MaxHeaderBytes").MustInt(1)
 
 	server := &http.Server{
-		Addr:           fmt.Sprintf(":%v", addr),
+		Addr:           fmt.Sprintf(":%v", port),
 		Handler:        engine,
 		ReadTimeout:    time.Duration(readTimeout) * time.Second,
 		WriteTimeout:   time.Duration(writeTimeout) * time.Second,

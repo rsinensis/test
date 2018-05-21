@@ -1,16 +1,6 @@
 package result
 
-const (
-	SUCCESS        = 200
-	ERROR          = 500
-	INVALID_PARAMS = 400
-)
-
-var MsgFlags = map[int]string{
-	SUCCESS:        "ok",
-	ERROR:          "fail",
-	INVALID_PARAMS: "请求参数错误",
-}
+import "encoding/json"
 
 type Result struct {
 	Code int         `json:"code"`
@@ -58,4 +48,26 @@ func Error() *Result {
 	ret.Msg = MsgFlags[ERROR]
 
 	return ret
+}
+
+func (r *Result) Json() string {
+
+	b, err := json.Marshal(r)
+
+	if err != nil {
+		return ""
+	}
+
+	return string(b)
+}
+
+func (r *Result) Jsonp(callback string) string {
+
+	b, err := json.Marshal(r)
+
+	if err != nil {
+		return ""
+	}
+
+	return callback + "(" + string(b) + ")"
 }
