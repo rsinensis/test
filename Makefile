@@ -30,6 +30,9 @@ deps:
 	go get -u -v github.com/go-ini/ini
 	go get -u -v github.com/go-sql-driver/mysql
 	go get -u -v github.com/go-xorm/xorm
+	go get -u -v github.com/gin-contrib/sessions
+	go get -u -v github.com/swaggo/gin-swagger
+	go get -u -v github.com/swaggo/gin-swagger/swaggerFiles
 
 .PHONY: dist
 dist: clean build
